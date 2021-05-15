@@ -37,7 +37,11 @@ for name in frame_name:
 
 # some codes
 node_all = pd_sql("select * FROM Things_locations_node "
-                  "WHERE node_id in (SELECT distinct node_id FROM Things_locations_data)")
+                  "WHERE node_id in (SELECT distinct node_id FROM Things_locations_data)"
+                  "ORDER BY node_id")
+DIV = [0, 1, 1, 8, 3, 3, 6, 7, 8, 4, 6, 2, 4, 6, 5, 4, 4, 2, 4, 2, 9, 4, 2, 6, 9, 2]
+
+node_all["class"] = DIV
 pd.io.sql.to_sql(frame=node_all,name="Tmp_node",con=engine,index=False,if_exists="replace")
 
 lats = np.array([eval(i) for i in node_all.lat])
